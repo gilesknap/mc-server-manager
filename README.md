@@ -45,8 +45,8 @@ a container / virtual machine / physical server **having only 1 instance running
 1. copy **minecraft-server.service** to the **/USER_HOMEDIR/.config/systemd/user/minecraft-server.service
 1. edit above service file to match your environment and needs
 1. install required Python libraries (`pip install --user -r requirements.txt`)
-1. confirm everything works fine: `cd backend; ./manage.py test` - this should list all servers found in **USER_HOMEDIR/servers-data directory** as well as should display current state of the Minecraft server.
 1. copy **config.ini.template** to **/USER_HOMEDIR/.minecraft/mc-manager-config** and edit its contents to match your environment**
+1. confirm everything works fine: `cd backend; ./manage.py test` - this should list all servers found in **USER_HOMEDIR/servers-data directory** as well as should display current state of the Minecraft server.
 
 ### High level overview
 
@@ -99,7 +99,7 @@ All backend components are stored inside of **backend** directory.
 
 For development purposes there is a **minecraft-server-stub.service** in this repo which might be used for testing various server scenarios.
 
-API server uses [Flask-API](https://www.flaskapi.org/) library. 
+API server uses [Flask-API](https://www.flaskapi.org/) library.
 
 Developing backend services requires Python 3.8 and libraries installed from **requirements.txt**. Using [pyenv](https://github.com/pyenv/pyenv) is recommended.
 

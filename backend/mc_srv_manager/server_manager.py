@@ -19,7 +19,7 @@ class server_manager:
             self.__config.get_servers_data_path(),
             srv_name
         ).exists():
-            return True 
+            return True
 
         return False
 
@@ -27,7 +27,7 @@ class server_manager:
         with DBus(user_mode=True) as bus, \
             Unit(self.__config.get_system_service_unit_name(), \
             bus=bus, _autoload=True) as service:
-    
+
             if service.Unit.ActiveState == b'active':
                 return True
 
@@ -40,7 +40,7 @@ class server_manager:
         with DBus(user_mode=True) as bus, \
             Unit(self.__config.get_system_service_unit_name(), \
             bus=bus, _autoload=True) as service:
-    
+
             try:
                 service.Unit.Stop(b"replace")
             except Exception as e:
@@ -56,14 +56,14 @@ class server_manager:
         with DBus(user_mode=True) as bus, \
             Unit(self.__config.get_system_service_unit_name(), \
             bus=bus, _autoload=True) as service:
-    
+
             try:
                 service.Unit.Start(b"replace")
             except Exception as e:
                 print(f"Can't start server: {e}")
                 return False
 
-            # print(f'Server\'s state: {service.Unit.ActiveState}')    
+            # print(f'Server\'s state: {service.Unit.ActiveState}')
             return True
 
         print('Can\t read server state via Dbus!')
@@ -93,7 +93,7 @@ class server_manager:
         return files
 
     def get_active_server_name(self) -> str:
-        """ 
+        """
         This method returns server that is currently set as active
         """
 
@@ -116,7 +116,7 @@ class server_manager:
         """
 
         srv_symlink = Path(f'{self.__config.get_server_path()}/server.properties')
-        
+
         try:
             srv_symlink_destination = srv_symlink.resolve(True)
         # If symlink was not found then there is no active server
@@ -129,8 +129,8 @@ class server_manager:
         return str(srv_symlink_destination.parent.name)
 
     def list_server_instances(self) -> Type[List]:
-        """ 
-        This method iterates over servers-data directory and 
+        """
+        This method iterates over servers-data directory and
         returns list of found servers.
         """
 
@@ -154,7 +154,7 @@ class server_manager:
             if not file_obj.exists():
                 try:
                     server_path = f'{self.__config.get_servers_data_path()}/{server_name}/{file}'
-                    # print(f'Creating symlink from {str(file_obj)} to {server_path}')
+                    print(f'Creating symlink from {str(file_obj)} to {server_path}')
                     file_obj.symlink_to(server_path)
                 except Exception:
                     print(f"Cant't create symlink for {server_path}!")
@@ -191,8 +191,8 @@ class server_manager:
         return True
 
     def create_new_server_from_templ_dir(self, server_name: str) -> bool:
-        """ 
-        This method creates a new server by copying template directory 
+        """
+        This method creates a new server by copying template directory
         into a new server-data/<server_name> dir
         """
 
@@ -204,5 +204,5 @@ class server_manager:
         except Exception as e:
             print(f"Cant't create new server {server_name}: {e}!")
             return False
-        
+
         return True
